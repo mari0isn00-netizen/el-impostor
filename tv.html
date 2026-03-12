@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EL IMPOSTOR</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getDatabase, ref, onValue, set, update, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -23,7 +24,7 @@
   const db  = getDatabase(app);
 
   const SALA       = "fiesta1";
-  const MOBILE_URL = "https://69b2ac06625dbe19e88588ad--taupe-peony-483d1e.netlify.app/movil.html?sala=fiesta1";
+  const MOBILE_URL = "https://mari0isn00-netizen.github.io/el-impostor/movil.html?sala=fiesta1";
   const salaRef      = ref(db, `salas/${SALA}`);
   const jugadoresRef = ref(db, `salas/${SALA}/jugadores`);
   const estadoRef    = ref(db, `salas/${SALA}/estado`);
@@ -34,6 +35,10 @@
 
   window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('url-movil').textContent = MOBILE_URL;
+    new QRCode(document.getElementById('qrcode'), {
+      text: MOBILE_URL, width: 160, height: 160,
+      colorDark: '#c8a96e', colorLight: '#07070d',
+    });
     escucharJugadores();
     escucharEstado();
     document.getElementById('btn-iniciar').addEventListener('click', iniciarJuego);
@@ -501,7 +506,9 @@
   <div class="sep"></div>
   <div class="lobby-bottom">
     <div class="lobby-url-box">
-      <div class="url-label">Enlace para el móvil</div>
+      <div class="url-label">Escanea para unirte</div>
+      <div id="qrcode" style="background:#07070d; padding:10px; border:1px solid rgba(200,169,110,0.3); display:inline-block;"></div>
+      <div class="url-label" style="margin-top:8px;">O entra en</div>
       <div id="url-movil"></div>
       <div class="lobby-acciones">
         <button class="btn btn-primario" id="btn-iniciar">COMENZAR PARTIDA</button>
